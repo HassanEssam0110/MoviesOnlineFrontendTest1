@@ -1,0 +1,90 @@
+<!-- <div class="bg-info text-danger" *ngFor="let movie of movies" [class.selectedId]="selectedId==movie.id"
+  (click)="goToMovieDetails(movie.id)">
+  {{movie.id}}){{movie.name}}
+
+</div> -->
+
+<!-- All Media-->
+<section class="section section--bg" id="home" data-bg="/assets/img/section/section.jpg">
+  <div class="container">
+    <div *ngIf="userloged; else loginMessage">
+      <div class="row">
+        <div class="col-12">
+          <div class="section__wrap">
+            <!-- section title -->
+            <h2 class="section__title">All Media</h2>
+            <!-- end section title -->
+
+            <!-- breadcrumb -->
+            <ul class="breadcrumb">
+              <li class="breadcrumb__item breadcrumb__item--active"><a routerLink="/home">Home</a></li>
+              <!-- <li class="breadcrumb__item "><a routerLink="/favorite">Favorites</a></li> -->
+            </ul>
+            <!-- end breadcrumb -->
+          </div>
+        </div>
+
+        <!-- card -->
+        <div *ngFor=" let media of MediaList?.slice(0, currentPage * mediasPerPage)"
+          class="col-6 col-sm-4 col-lg-3 col-xl-2">
+          <div class="card">
+            <div class="card__cover">
+              <!-- <img [src]="getSafeImage(media.image)" alt="image"> -->
+              <img src={{media.image}} alt="image">
+              <button class="card__play" (click)="goToMovieDetails(media._id)">
+                <i class="icon ion-ios-play"></i>
+              </button>
+            </div>
+            <div class="card__content">
+              <h3 class="card__title"><a href="#">{{media.title}}</a></h3>
+
+              <div>
+                <span class="card__category ">
+                  <a *ngFor="let genre of media.genre">{{genre}}</a>
+                </span>
+                <!-- <span class="card__category">
+                <a (click)="openModal(media)">Triler</a>
+              </span> -->
+                <span class="card__category">
+                  <a (click)="openModal(media.trailer)">Triler</a>
+                  <!-- <a href="{{ media.trailer }}" target="_blank">Watch Trailer</a> -->
+                </span>
+              </div>
+              <!-- Modal -->
+              <div id="modal" class="modal" [ngStyle]="{'display': modalOpen ? 'flex' : 'none'}">
+                <div class="modal-content">
+                  <div class="close" (click)="closeModal()">&times;</div>
+                  <div class="overlay" [ngStyle]="{'display': isLoading ? 'flex' : 'none'}">
+                    <div class="spinner"></div>
+                  </div>
+                  <!-- <iframe [src]="getVideoURL(media.trailer)" width="853" height="480" id="modal-iframe" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe> -->
+                  <iframe [src]="safeUrl" width="100%" height="480" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen (load)="onIframeLoad()"></iframe>
+                </div>
+              </div>
+
+              <!-- end All Media -->
+
+              <span class="card__rate"><i class="icon ion-ios-star"></i>{{media.rating}}</span>
+
+              <!-- Button trigger modal -->
+              <!-- <button (click)="openModal()">Launch demo modal</button> -->
+
+            </div>
+          </div>
+        </div>
+        <!-- end card -->
+        <div class="col-12">
+          <button class="section__btn" (click)="loadMore()" *ngIf="mediasPerPage > 6">Show more</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #loginMessage>
+      <h2 class="section__title">Please log in to view this content.</h2>
+    </ng-template>
+  </div>
+
+</section>

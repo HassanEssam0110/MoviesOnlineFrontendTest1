@@ -1,0 +1,85 @@
+<div class="sign section--bg" data-bg="/assets/img/section/section.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section__wrap">
+          <!-- section title -->
+          <h2 class="section__title">You can request movie to upload..</h2>
+          <!-- end section title -->
+
+          <!-- breadcrumb -->
+          <ul class="breadcrumb">
+            <li class="breadcrumb__item "><a routerLink="/home">Home</a></li>
+            <li class="breadcrumb__item breadcrumb__item--active "><a routerLink="/request">Requests</a></li>
+          </ul>
+          <!-- end breadcrumb -->
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="sign__content">
+          <!-- authorization form -->
+          <form [formGroup]="uRequestForm" (ngSubmit)="onSubmint()" novalidate class="sign__form">
+            <div>
+              <h2 class="section__title">create request</h2>
+            </div>
+            <!-- title -->
+            <div class="sign__group form-group">
+              <input type="text" formControlName="title"
+                [class.is-invalid]="uRequestForm.get('title')?.invalid && uRequestForm.get('title')?.touched"
+                class="form-control sign__input" placeholder="Request title">
+
+              <div *ngIf="uRequestForm.get('title')?.invalid && uRequestForm.get('title')?.touched">
+                <small class="text-danger" *ngIf="uRequestForm.get('title')?.errors?.['required']">Request title is
+                  required</small>
+                <small class="text-danger" *ngIf="uRequestForm.get('title')?.errors?.['minlength']">Request title must
+                  be at least 6 characters </small>
+              </div>
+            </div>
+
+            <!-- topic -->
+            <div class="sign__group form-group">
+              <!-- <input type="text" formControlName="topic"
+                      [class.is-invalid]="uRequestForm.get('topic')?.invalid && uRequestForm.get('topic')?.touched"
+                      class="form-control sign__input" placeholder="Request topic"> -->
+              <textarea formControlName="topic"
+                [class.is-invalid]="uRequestForm.get('topic')?.invalid && uRequestForm.get('topic')?.touched"
+                class="form-control sign__input text_area" placeholder="Request topic"></textarea>
+
+              <div *ngIf="uRequestForm.get('topic')?.invalid && uRequestForm.get('topic')?.touched">
+                <small class="text-danger" *ngIf="uRequestForm.get('topic')?.errors?.['required']">Request topic is
+                  required</small>
+              </div>
+            </div>
+
+
+            <button class="sign__btn" type="submit" [disabled]="uRequestForm.invalid">Send Request</button>
+          </form>
+          <!-- end authorization form -->
+        </div>
+      </div>
+
+      <div class="col-12">
+        <table class="my-table table-wrapper " *ngIf="userRequests.length > 0">
+          <caption>Your requests</caption>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Topic</th>
+              <th>Admin response</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let req of userRequests; let i = index">
+              <td>{{ i +1}}</td>
+              <td>{{ req.title }}</td>
+              <td>{{ req.topic }}</td>
+              <td>{{ req.adminResponse ? "admin: "+req.adminResponse : 'wait..' }}</td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

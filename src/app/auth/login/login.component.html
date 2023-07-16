@@ -1,0 +1,58 @@
+<div class="sign section--bg" data-bg="/assets/img/section/section.jpg">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sign__content">
+
+          <!-- authorization form -->
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmint()" novalidate class="sign__form">
+            <a routerLink="/home" class="sign__logo">
+              <img src="../../../assets/img/logo.svg" alt="home">
+            </a>
+
+            <!-- email -->
+            <div class="sign__group form-group">
+              <input type="text" formControlName="email"
+                [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+                class="form-control sign__input" placeholder="Email">
+
+              <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['required']">Email is
+                  required</small>
+                <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format
+                  ex:test33@gmail.com </small>
+              </div>
+
+            </div>
+
+            <!-- password -->
+            <div class="sign__group form-group">
+              <input type="password" formControlName="password"
+                [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                class="form-control sign__input" placeholder="Password">
+
+              <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.['required']">Password is
+                  required</small>
+                <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must
+                  be at least 8 characters</small>
+              </div>
+
+            </div>
+
+            <div class="sign__group sign__group--checkbox form-group">
+              <input id="remember" name="remember" type="checkbox" checked="checked" formControlName="rememberMe">
+              <label for="remember">Remember Me</label>
+            </div>
+
+            <button class="sign__btn" type="submit" [disabled]="loginForm.invalid">Sign in</button>
+            <span class="sign__text">Don't have an account? <a routerLink="/auth/register">Sign up!</a></span>
+
+            <!-- <span class="sign__text"><a href="#">Forgot password?</a></span> -->
+          </form>
+          <!-- end authorization form -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

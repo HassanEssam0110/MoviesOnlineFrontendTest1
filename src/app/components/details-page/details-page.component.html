@@ -1,0 +1,101 @@
+<!-- details -->
+<section class="section details">
+
+  <!-- details background -->
+  <!-- <div class="details__bg" data-bg="assets/img/home/home__bg.jpg"></div> -->
+  <!-- end details background -->
+
+  <!-- details content -->
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let item of mediaFounded">
+        <!-- title -->
+        <div class="col-12">
+          <h1 class="details__title">{{item.title}}</h1>
+        </div>
+        <!-- end title -->
+        <!-- content -->
+        <div class="col-10">
+          <div class="card card--details card--series">
+            <div class="row">
+              <!-- card cover -->
+              <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
+                <div class="card__cover">
+                  <img src={{item.image}} alt="">
+                </div>
+              </div>
+              <!-- end card cover -->
+
+              <!-- card content -->
+              <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-9">
+                <div class="card__content">
+                  <div class="card__wrap">
+                    <span class="card__rate"><i class="icon ion-ios-star"></i>{{item.rating}}</span>
+                    <ul class="card__list">
+                      <li>HD</li>
+                      <li>16+</li>
+                      <button (click)="addToFavorites(item._id)">Add to favorites</button>
+                    </ul>
+                  </div>
+
+                  <ul class="card__meta">
+                    <li>
+                      <span>Genre:</span>
+                      <a *ngFor="let genre of item.genre">{{genre}}</a>
+                    </li>
+                    <li>
+                      <span class="card__category">
+                        <a (click)="openModal(item.trailer)">Triler</a>
+                        <!-- <a href="{{ media.trailer }}" target="_blank">Watch Trailer</a> -->
+                      </span>
+                    </li>
+                    <!-- Modal -->
+                    <div id="modal" class="modal" [ngStyle]="{'display': modalOpen ? 'flex' : 'none'}">
+                      <div class="modal-content">
+                        <div class="close" (click)="closeModal()">&times;</div>
+                        <div class="overlay" [ngStyle]="{'display': isLoading ? 'flex' : 'none'}">
+                          <div class="spinner"></div>
+                        </div>
+                        <iframe [src]="safeUrl" width="100%" height="480" frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowfullscreen (load)="onIframeLoad()"></iframe>
+                      </div>
+                    </div>
+                    <li><span>Release year:</span> {{item.year}}</li>
+                    <!-- <li><span>Running time:</span> 120 min</li> -->
+                    <li><span>Director:</span> {{item.director}}
+                    </li>
+                    <li><span>Cast:</span> <span *ngFor="let cast of item.cast">{{" , " + cast }}</span></li>
+                    <!-- <li><span>Country:</span> <a href="#">USA</a> </li> -->
+                  </ul>
+                  <div class="card__description card__description--details">
+                    {{item.description}}
+                  </div>
+                </div>
+              </div>
+              <!-- end card content -->
+            </div>
+          </div>
+        </div>
+        <!-- end content -->
+
+        <!-- player -->
+        <div class="col-12 ">
+
+          <!-- </video> -->
+          <!-- <source [src]="videoUrl" type="video/mp4"> -->
+          <!-- <video #plyrPlayer controls crossorigin playsinline id="player">
+            <source src={{item.video}} type="video/mp4">
+          </video> -->
+          <iframe [src]="videoUrl" frameborder="1" class="video-iframe" allowfullscreen></iframe>
+        </div>
+        <!-- end player -->
+
+
+      </div>
+
+    </div>
+  </div>
+  <!-- end details content -->
+</section>
+<!-- end details -->

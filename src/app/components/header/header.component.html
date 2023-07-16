@@ -1,0 +1,112 @@
+<!-- header -->
+<header class="header">
+  <div class="header__wrap">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="header__content">
+            <!-- header logo -->
+            <a routerLink="home" class="header__logo">
+              <img src="assets/img/logo.svg" alt="">
+            </a>
+            <!-- end header logo -->
+            <!-- header nav -->
+            <ul class="header__nav">
+              <!-- dropdown -->
+              <li class="header__nav-item">
+                <!-- <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuHome"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a> -->
+                <a class=" header__nav-link" routerLink="/home">Home</a>
+                <!-- end dropdown -->
+                <!-- dropdown -->
+              <li class="header__nav-item">
+                <a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
+                <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
+                  <li><a routerLink="/Catalog">Movie English</a></li>
+                  <li><a routerLink="/Catalog">Movie Arabic</a></li>
+                </ul>
+              </li>
+              <!-- end dropdown -->
+
+              <li class="header__nav-item" *ngIf="!logedin()">
+                <a routerLink="/favorite" class="header__nav-link">Favorites</a>
+              </li>
+
+              <li class="header__nav-item" *ngIf="!logedin()">
+                <a routerLink="request" class="header__nav-link">Request Media</a>
+              </li>
+
+              <!-- dropdown -->
+              <li class="dropdown header__nav-item">
+                <a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button"
+                  id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                    class="icon ion-ios-more"></i></a>
+
+                <ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
+                  <li><a routerLink="/about">About</a></li>
+                  <!-- <li><a routerLink="/auth/login">Sign In</a></li> -->
+                  <li class="nav-item" *ngIf="logedin()"><a class="nav-link" routerLink="/auth/login">Sign In</a>
+                  </li>
+                  <li class="nav-item" *ngIf="!logedin()" style="cursor: pointer;"> <a class="nav-link"
+                      (click)="logout()">LogOut</a>
+                  </li>
+                  <li><a routerLink="/auth/register" *ngIf="logedin()">Sign Up</a></li>
+                </ul>
+              </li>
+              <!-- end dropdown -->
+            </ul>
+            <!-- end header nav -->
+
+            <!-- header auth -->
+            <div class="header__auth">
+              <button class="header__search-btn" type="button">
+                <i class="icon ion-ios-search"></i>
+              </button>
+
+              <ng-container *ngIf="logedin(); else welcomeUserName">
+                <a routerLink="/auth/login" class="header__sign-in">
+                  <i class="icon ion-ios-log-in"></i>
+                  <span>sign in</span>
+                </a>
+              </ng-container>
+              <ng-template #welcomeUserName>
+                <div class=" userName">
+                  <i class="icon ion-ios-person" style="margin-right: 3px; font-size: 25px;"></i>
+                  {{userName}}
+                </div>
+              </ng-template>
+            </div>
+            <!-- end header auth -->
+
+            <!-- header menu btn -->
+            <button class="header__btn" type="button">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <!-- end header menu btn -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- header search -->
+  <form [formGroup]="searchForm" (ngSubmit)="search()" novalidate class="header__search">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="header__search-content">
+            <input type="text" placeholder="Search for a movie" formControlName="searchName" class="form-control"
+              [class.is-invalid]="searchForm.get('searchName')?.invalid && searchForm.get('searchName')?.touched">
+
+            <button class="search__btn" type="submit" [disabled]="searchForm.invalid">search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- end header search -->
+</header>
+<!-- end header -->
